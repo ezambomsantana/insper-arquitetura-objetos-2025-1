@@ -1,14 +1,23 @@
 package org.example;
 
 
+import java.io.Console;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
 public class Main {
     public static void main(String[] args) {
-        String var1 = "texto";
+
+        Console console = System.console();
+        System.out.println("Digite o texto:");
+        String var1 = console.readLine();
+        System.out.print("Digite o texto:");
+        String var3 = console.readLine();
         System.out.println(var1);
+
+        int valor = Integer.parseInt(var3);
+
 
         int var2 = var1.length();
 
