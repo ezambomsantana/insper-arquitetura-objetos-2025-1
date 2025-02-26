@@ -13,28 +13,34 @@ public class Conta {
     private Cliente dependente;
     private ArrayList<Transacao> transacoes = new ArrayList<>();
 
+    public Conta(String numeroConta, String agencia, Cliente principal) {
+        this.numeroConta = numeroConta;
+        this.agencia = agencia;
+        this.principal = principal;
+    }
+
     public void saque(int valor) {
 
         if (this.saldo + this.limite >= valor) {
             this.saldo -= valor;
 
-            Transacao transacao = new Transacao();
-            transacao.setValor(valor);
-            transacao.setTipo("saque");
-            transacao.setHorario(LocalDateTime.now());
-            this.transacoes.add(transacao);
+            addTransacao(valor, "saque");
         }
 
+    }
+
+    private void addTransacao(float valor, String tipo) {
+        Transacao transacao = new Transacao();
+        transacao.setValor(valor);
+        transacao.setTipo(tipo);
+        transacao.setHorario(LocalDateTime.now());
+        this.transacoes.add(transacao);
     }
 
     public void deposito(float valor) {
         this.saldo += valor;
 
-        Transacao transacao = new Transacao();
-        transacao.setValor(valor);
-        transacao.setTipo("deposito");
-        transacao.setHorario(LocalDateTime.now());
-        this.transacoes.add(transacao);
+        addTransacao(valor, "deposito");
     }
 
     public void defineLimite() {
@@ -78,4 +84,5 @@ public class Conta {
     public void setDependente(Cliente dependente) {
         this.dependente = dependente;
     }
+
 }

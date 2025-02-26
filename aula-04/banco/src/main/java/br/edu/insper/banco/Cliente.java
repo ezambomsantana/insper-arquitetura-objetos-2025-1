@@ -1,4 +1,4 @@
-package org.example;
+package br.edu.insper.banco;
 
 import java.time.LocalDate;
 
@@ -7,6 +7,7 @@ public class Cliente {
     private String cpf;
     private float renda;
     private LocalDate dataNascimento;
+
 
     public String getNome() {
         return nome;
@@ -38,10 +39,5 @@ public class Cliente {
 
     public void setDataNascimento(LocalDate dataNascimento) {
         this.dataNascimento = dataNascimento;
-    }
-
-    @Override
-    public String toString() {
-        return String.format("Nome %s CPF %s", nome, cpf);
     }
 }

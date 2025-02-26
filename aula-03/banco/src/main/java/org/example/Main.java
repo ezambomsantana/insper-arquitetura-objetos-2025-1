@@ -11,10 +11,8 @@ public class Main {
         cliente.setRenda(1000);
         cliente.setDataNascimento(LocalDate.of(2020, 1, 1));
 
-        Conta conta = new Conta();
-        conta.setNumeroConta("123");
-        conta.setAgencia("123");
-        conta.setPrincipal(cliente);
+
+        Conta conta = new Conta("1267673", "176723", cliente);
 
         conta.defineLimite();
         conta.deposito(100);
