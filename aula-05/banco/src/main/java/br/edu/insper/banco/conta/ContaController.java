@@ -1,7 +1,5 @@
 package br.edu.insper.banco.conta;
 
-import br.edu.insper.banco.cliente.Cliente;
-import br.edu.insper.banco.cliente.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -12,13 +10,11 @@ import java.util.HashMap;
 public class ContaController {
 
     @Autowired
-    private ClienteService clienteService;
-
-    private HashMap<Integer, Conta> contas = new HashMap<>();
+    private ContaService contaService;
 
     @GetMapping("/conta")
     public HashMap<Integer, Conta> getContas() {
-        return contas;
+        return contaService.getContas();
     }
 
     @PostMapping("/conta")
@@ -31,16 +27,33 @@ public class ContaController {
         if (conta.getAgencia() == null) {
             return "CPF não pode ser nulo";
         }
-        Cliente cliente = clienteService.getCliente(conta.getPrincipal().getCpf());
-        if (cliente == null) {
-            return "Erro ao criar conta, cliente não encontrado";
+        Conta novaConta = contaService.salvarConta(conta);
+        if (novaConta != null) {
+            return "Cliente salvo com sucesso";
+        } else{
+            return "Erro ao criar conta";
         }
+    }
 
-        conta.setPrincipal(cliente);
-        conta.setId(contas.values().size());
+    @GetMapping("/conta/{id}")
+    public Conta conta(@PathVariable Integer id) {
+        return contaService.getConta(id);
+    }
 
-        contas.put(conta.getId(), conta);
-        return "Cliente salvo com sucesso";
+
+    @DeleteMapping("/conta/{id}")
+    public void deleteConta(@PathVariable Integer id) {
+        contaService.deleteConta(id);
+    }
+
+    @PostMapping("/conta/{id}/saque")
+    public Conta saque(@PathVariable Integer id, @RequestBody String valor) {
+        return contaService.saque(id, Float.valueOf(valor));
+    }
+
+    @PostMapping("/conta/{id}/deposito")
+    public Conta deposito(@PathVariable Integer id, @RequestBody String valor) {
+        return contaService.deposito(id, Float.valueOf(valor));
     }
 
 

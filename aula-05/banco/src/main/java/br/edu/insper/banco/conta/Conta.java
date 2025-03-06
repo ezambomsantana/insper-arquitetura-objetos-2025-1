@@ -22,7 +22,7 @@ public class Conta {
         this.principal = principal;
     }
 
-    public void saque(int valor) {
+    public void saque(float valor) {
 
         if (this.saldo + this.limite >= valor) {
             this.saldo -= valor;
