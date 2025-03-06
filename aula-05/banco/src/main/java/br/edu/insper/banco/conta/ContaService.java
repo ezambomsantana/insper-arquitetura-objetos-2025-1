@@ -27,7 +27,7 @@ public class ContaService {
         conta.setPrincipal(cliente);
 
         if (conta.getDependente() != null) {
-            Cliente dependente = clienteService.getCliente(conta.getPrincipal().getCpf());
+            Cliente dependente = clienteService.getCliente(conta.getDependente().getCpf());
             if (dependente == null) {
                 return null;
             }

@@ -47,13 +47,13 @@ public class ContaController {
     }
 
     @PostMapping("/conta/{id}/saque")
-    public Conta saque(@PathVariable Integer id, @RequestBody String valor) {
-        return contaService.saque(id, Float.valueOf(valor));
+    public Conta saque(@PathVariable Integer id, @RequestBody MovimentacaoDTO movimentacao) {
+        return contaService.saque(id, movimentacao.getValor());
     }
 
     @PostMapping("/conta/{id}/deposito")
-    public Conta deposito(@PathVariable Integer id, @RequestBody String valor) {
-        return contaService.deposito(id, Float.valueOf(valor));
+    public Conta deposito(@PathVariable Integer id, @RequestBody MovimentacaoDTO movimentacao) {
+        return contaService.deposito(id, movimentacao.getValor());
     }
 
 
