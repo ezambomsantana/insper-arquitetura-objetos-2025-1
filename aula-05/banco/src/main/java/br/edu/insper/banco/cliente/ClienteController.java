@@ -1,5 +1,6 @@
-package br.edu.insper.banco;
+package br.edu.insper.banco.cliente;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -8,11 +9,12 @@ import java.util.HashMap;
 @RestController
 public class ClienteController {
 
-    private HashMap<String, Cliente> clientes = new HashMap<>();
+    @Autowired
+    private ClienteService clienteService;
 
     @GetMapping("/cliente")
     public HashMap<String, Cliente> getClientes() {
-        return clientes;
+        return clienteService.getClientes();
     }
 
     @PostMapping("/cliente")
@@ -26,20 +28,20 @@ public class ClienteController {
             return "CPF não pode ser nulo";
         }
 
-        clientes.put(cliente.getCpf(), cliente);
+        clienteService.salvarCliente(cliente);
         return "Cliente salvo com sucesso";
     }
 
     @GetMapping("/cliente/{cpf}")
     public Cliente getCliente(@PathVariable String cpf) {
-        return clientes.get(cpf);
+        return clienteService.getCliente(cpf);
     }
 
 
     @DeleteMapping("/cliente/{cpf}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public String excluirCliente(@PathVariable String cpf) {
-        Cliente cliente = clientes.remove(cpf);
+        Cliente cliente = clienteService.removerCliente(cpf);
         if (cliente != null) {
             return "Cliente removido com sucesso";
         }
@@ -48,21 +50,11 @@ public class ClienteController {
 
     @PutMapping("/cliente/{cpf}")
     public String editarCliente(@PathVariable String cpf, @RequestBody Cliente cliente) {
-        Cliente clienteEditar = clientes.get(cpf);
 
-        if (clienteEditar != null) {
-
-            if (cliente.getNome() != null) {
-                clienteEditar.setNome(cliente.getNome());
-            }
-
-            if (cliente.getRenda() != clienteEditar.getRenda()) {
-                clienteEditar.setRenda(cliente.getRenda());
-            }
+        Cliente clienteRetorno = clienteService.editarCliente(cpf, cliente);
+        if (clienteRetorno != null) {
             return "Cliente alterado com sucesso";
-
         }
-
         return "cliente não encontrado";
     }
 

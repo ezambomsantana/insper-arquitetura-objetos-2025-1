@@ -1,4 +1,6 @@
-package br.edu.insper.banco;
+package br.edu.insper.banco.conta;
+
+import br.edu.insper.banco.cliente.Cliente;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

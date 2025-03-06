@@ -1,5 +1,8 @@
-package br.edu.insper.banco;
+package br.edu.insper.banco.conta;
 
+import br.edu.insper.banco.cliente.Cliente;
+import br.edu.insper.banco.cliente.ClienteService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -7,6 +10,9 @@ import java.util.HashMap;
 
 @RestController
 public class ContaController {
+
+    @Autowired
+    private ClienteService clienteService;
 
     private HashMap<Integer, Conta> contas = new HashMap<>();
 
@@ -25,6 +31,12 @@ public class ContaController {
         if (conta.getAgencia() == null) {
             return "CPF não pode ser nulo";
         }
+        Cliente cliente = clienteService.getCliente(conta.getPrincipal().getCpf());
+        if (cliente == null) {
+            return "Erro ao criar conta, cliente não encontrado";
+        }
+
+        conta.setPrincipal(cliente);
         conta.setId(contas.values().size());
 
         contas.put(conta.getId(), conta);

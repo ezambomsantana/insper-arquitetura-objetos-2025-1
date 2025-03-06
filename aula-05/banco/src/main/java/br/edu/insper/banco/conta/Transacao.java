@@ -1,4 +1,4 @@
-package br.edu.insper.banco;
+package br.edu.insper.banco.conta;
 
 import java.time.LocalDateTime;
 
