@@ -3,6 +3,7 @@ package br.edu.insper.banco.cliente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashMap;
 
@@ -21,11 +22,11 @@ public class ClienteController {
     @ResponseStatus(HttpStatus.CREATED)
     public String salvarCliente(@RequestBody Cliente cliente) {
         if (cliente.getNome() == null) {
-            return "Nome não pode ser nulo";
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Nome é obrigatório.");
         }
 
         if (cliente.getCpf() == null) {
-            return "CPF não pode ser nulo";
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "CPF é obrigatório");
         }
 
         clienteService.salvarCliente(cliente);
@@ -34,7 +35,11 @@ public class ClienteController {
 
     @GetMapping("/cliente/{cpf}")
     public Cliente getCliente(@PathVariable String cpf) {
-        return clienteService.getCliente(cpf);
+        Cliente cliente = clienteService.getCliente(cpf);
+        if (cliente != null) {
+            return cliente;
+        }
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND);
     }
 
 
@@ -45,7 +50,7 @@ public class ClienteController {
         if (cliente != null) {
             return "Cliente removido com sucesso";
         }
-        return "Cliente não encontrado";
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND);
     }
 
     @PutMapping("/cliente/{cpf}")
@@ -55,7 +60,7 @@ public class ClienteController {
         if (clienteRetorno != null) {
             return "Cliente alterado com sucesso";
         }
-        return "cliente não encontrado";
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND);
     }
 
 }

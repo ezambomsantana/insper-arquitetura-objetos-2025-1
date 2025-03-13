@@ -2,7 +2,9 @@ package br.edu.insper.banco.cartao;
 
 import br.edu.insper.banco.cliente.Cliente;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashMap;
 import java.util.List;
@@ -41,6 +43,11 @@ public class CartaoController {
     @PutMapping("/cartao/{numeroCartao}/bloquear")
     public Cartao bloquearCartao(@PathVariable String numeroCartao) {
         return cartaoService.bloquearCartao(numeroCartao);
+        //try {
+        //    return cartaoService.bloquearCartao(numeroCartao);
+        //} catch (CartaoNotFoundException exception) {
+        //    throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Cartão não encontrado");
+        //}
     }
 
 }
