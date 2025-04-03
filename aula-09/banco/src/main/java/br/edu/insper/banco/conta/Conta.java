@@ -16,6 +16,10 @@ public class Conta {
     private Cliente dependente;
     private ArrayList<Transacao> transacoes = new ArrayList<>();
 
+    public Conta() {
+
+    }
+
     public Conta(String numeroConta, String agencia, Cliente principal) {
         this.numeroConta = numeroConta;
         this.agencia = agencia;
