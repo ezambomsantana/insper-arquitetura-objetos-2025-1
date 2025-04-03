@@ -17,10 +17,10 @@ public class Conta {
     private float saldo;
     private float limite;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "id_principal")
     private Cliente principal;
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "id_dependente")
     private Cliente dependente;
    // private ArrayList<Transacao> transacoes = new ArrayList<>();

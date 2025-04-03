@@ -1,8 +1,11 @@
 package br.edu.insper.banco.cliente;
 
+import br.edu.insper.banco.conta.Conta;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 public class Cliente {
@@ -18,6 +21,14 @@ public class Cliente {
     @Column(nullable = false)
     private float renda;
     private LocalDate dataNascimento;
+
+    @OneToMany(mappedBy = "principal")
+    @JsonIgnore
+    private List<Conta> contasPrincipal;
+
+    @OneToMany(mappedBy = "dependente")
+    @JsonIgnore
+    private List<Conta> contasDependente;
 
     public int getId() {
         return id;
@@ -57,5 +68,21 @@ public class Cliente {
 
     public void setDataNascimento(LocalDate dataNascimento) {
         this.dataNascimento = dataNascimento;
+    }
+
+    public List<Conta> getContasPrincipal() {
+        return contasPrincipal;
+    }
+
+    public void setContasPrincipal(List<Conta> contasPrincipal) {
+        this.contasPrincipal = contasPrincipal;
+    }
+
+    public List<Conta> getContasDependente() {
+        return contasDependente;
+    }
+
+    public void setContasDependente(List<Conta> contasDependente) {
+        this.contasDependente = contasDependente;
     }
 }
