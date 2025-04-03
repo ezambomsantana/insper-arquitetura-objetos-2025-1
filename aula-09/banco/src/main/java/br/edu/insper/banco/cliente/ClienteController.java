@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashMap;
+import java.util.List;
 
 @RestController
 public class ClienteController {
@@ -14,7 +15,7 @@ public class ClienteController {
     private ClienteService clienteService;
 
     @GetMapping("/cliente")
-    public HashMap<String, Cliente> getClientes() {
+    public List<Cliente> getClientes() {
         return clienteService.getClientes();
     }
 

@@ -1,20 +1,29 @@
 package br.edu.insper.banco.conta;
 
 import br.edu.insper.banco.cliente.Cliente;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+@Entity
 public class Conta {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String numeroConta;
     private String agencia;
     private float saldo;
     private float limite;
+
+    @OneToMany
+    @JoinColumn(name = "id_principal")
     private Cliente principal;
+    @OneToMany
+    @JoinColumn(name = "id_dependente")
     private Cliente dependente;
-    private ArrayList<Transacao> transacoes = new ArrayList<>();
+   // private ArrayList<Transacao> transacoes = new ArrayList<>();
 
     public Conta() {
 
@@ -31,7 +40,7 @@ public class Conta {
         if (this.saldo + this.limite >= valor) {
             this.saldo -= valor;
 
-            addTransacao(valor, "saque");
+          //  addTransacao(valor, "saque");
         }
 
     }
@@ -41,7 +50,7 @@ public class Conta {
         transacao.setValor(valor);
         transacao.setTipo(tipo);
         transacao.setHorario(LocalDateTime.now());
-        this.transacoes.add(transacao);
+    //    this.transacoes.add(transacao);
     }
 
     public void deposito(float valor) {

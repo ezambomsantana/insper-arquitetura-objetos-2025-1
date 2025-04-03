@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 
 @RestController
 public class ContaController {
@@ -13,7 +14,7 @@ public class ContaController {
     private ContaService contaService;
 
     @GetMapping("/conta")
-    public HashMap<Integer, Conta> getContas() {
+    public List<Conta> getContas() {
         return contaService.getContas();
     }
 

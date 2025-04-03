@@ -3,20 +3,24 @@ package br.edu.insper.banco.conta;
 import br.edu.insper.banco.cliente.Cliente;
 import br.edu.insper.banco.cliente.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashMap;
+import java.util.List;
 
 @Service
 public class ContaService {
 
-    private HashMap<Integer, Conta> contas = new HashMap<>();
+    @Autowired
+    private ContaRepository contaRepository;
 
     @Autowired
     private ClienteService clienteService;
 
-    public HashMap<Integer, Conta> getContas() {
-        return contas;
+    public List<Conta> getContas() {
+        return contaRepository.findAll();
     }
 
     public Conta salvarConta(Conta conta) {
@@ -34,18 +38,16 @@ public class ContaService {
             conta.setDependente(dependente);
         }
 
-        conta.setId(contas.size());
-
-        contas.put(conta.getId(), conta);
-        return conta;
+        return contaRepository.save(conta);
     }
 
     public Conta getConta(Integer id) {
-        return contas.get(id);
+        return contaRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     public void deleteConta(Integer id) {
-        contas.remove(id);
+        contaRepository.deleteById(id);
     }
 
     public Conta saque(Integer id, float valor) {
@@ -55,7 +57,7 @@ public class ContaService {
         }
 
         conta.saque(valor);
-        return conta;
+        return contaRepository.save(conta);
     }
 
     public Conta deposito(Integer id, float valor) {
@@ -65,6 +67,6 @@ public class ContaService {
         }
 
         conta.deposito(valor);
-        return conta;
+        return contaRepository.save(conta);
     }
 }

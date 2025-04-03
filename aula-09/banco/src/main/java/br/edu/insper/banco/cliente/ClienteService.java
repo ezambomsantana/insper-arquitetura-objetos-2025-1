@@ -1,28 +1,33 @@
 package br.edu.insper.banco.cliente;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 
 @Service
 public class ClienteService {
 
-    private HashMap<String, Cliente> clientes = new HashMap<>();
+    @Autowired
+    private ClienteRepository clienteRepository;
 
-    public HashMap<String, Cliente> getClientes() {
-        return clientes;
+    public List<Cliente> getClientes() {
+        return clienteRepository.findAll();
     }
 
     public void salvarCliente(Cliente cliente) {
-        clientes.put(cliente.getCpf(), cliente);
+        clienteRepository.save(cliente);
     }
 
     public Cliente getCliente(String cpf) {
-        return clientes.get(cpf);
+        return clienteRepository.findByCpf(cpf);
     }
 
     public Cliente removerCliente(String cpf) {
-        return clientes.remove(cpf);
+        Cliente cliente = getCliente(cpf);
+        clienteRepository.delete(cliente);
+        return cliente;
     }
 
     public Cliente editarCliente(String cpf, Cliente cliente) {
@@ -38,7 +43,7 @@ public class ClienteService {
                 clienteEditar.setRenda(cliente.getRenda());
             }
         }
-        return clienteEditar;
+        return clienteRepository.save(clienteEditar);
     }
 
 }
