@@ -1,6 +1,8 @@
 package br.edu.insper.banco.cliente;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -15,8 +17,11 @@ public class ClienteController {
     private ClienteService clienteService;
 
     @GetMapping("/cliente")
-    public List<Cliente> getClientes() {
-        return clienteService.getClientes();
+    public Page<Cliente> getClientes(
+            @RequestParam(required = false) String nome,
+            @RequestParam(required = false) Float renda,
+            Pageable pageable) {
+        return clienteService.getClientes(nome, renda, pageable);
     }
 
     @PostMapping("/cliente")

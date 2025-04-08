@@ -1,6 +1,8 @@
 package br.edu.insper.banco.cliente;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -12,8 +14,8 @@ public class ClienteService {
     @Autowired
     private ClienteRepository clienteRepository;
 
-    public List<Cliente> getClientes() {
-        return clienteRepository.findAll();
+    public Page<Cliente> getClientes(String nome, Float renda, Pageable pageable) {
+        return clienteRepository.buscarClientePorNomeERenda(nome, renda, pageable);
     }
 
     public void salvarCliente(Cliente cliente) {
