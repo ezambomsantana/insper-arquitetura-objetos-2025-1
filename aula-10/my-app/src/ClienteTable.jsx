@@ -1,6 +1,32 @@
+import { useEffect, useState } from "react"
 
 
-export function ClienteTable({clientes}) {
+export function ClienteTable() {
+
+
+    const [clientes, setClientes] = useState([])
+
+
+    {
+        'numeroConta' numeroConta,
+        'principal': {
+            'cpf': cpf
+        }
+    }
+
+
+    useEffect(() => {
+
+        fetch('http://localhost:8080/cliente', {
+            method: 'GET'
+        }).then(response => {
+            return response.json()
+        }).then(data => {
+            setClientes(data.content)
+        })
+
+    }, [])
+
 
     return <table>
 

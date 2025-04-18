@@ -7,8 +7,8 @@ import { ClienteForm } from './ClienteForm'
 
 function App() {
 
-  const [clientes, setClientes] = useState([])
   const [menu, setMenu] = useState(0)
+
 
 
 
@@ -19,8 +19,8 @@ function App() {
       <button onClick={() => setMenu(1)}>Listar Cliente</button>
 
 
-      { menu == 0 && <ClienteForm clientes={clientes} setClientes={setClientes}></ClienteForm>}
-      { menu == 1 && <ClienteTable clientes={clientes}></ClienteTable>}
+      { menu == 0 && <ClienteForm></ClienteForm>}
+      { menu == 1 && <ClienteTable></ClienteTable>}
       
       
     </>

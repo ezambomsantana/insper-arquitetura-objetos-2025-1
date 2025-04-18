@@ -3,7 +3,7 @@ import { InputText } from "./InputText"
 
 
 
-export function ClienteForm({clientes, setClientes}) {
+export function ClienteForm() {
 
   const [nome, setNome] = useState()
   const [cpf, setCpf] = useState()
@@ -13,7 +13,21 @@ export function ClienteForm({clientes, setClientes}) {
       'nome': nome,
       'cpf': cpf
     }
-    setClientes([...clientes, cliente])
+
+    fetch('http://localhost:8080/cliente', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(cliente)
+    }).then(response => {
+      return response.text()
+    }).then(data => {
+      alert(data)
+    }).catch(error =>
+      alert(error)
+    )
+
   }
 
   return <>
