@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { InputText } from "./InputText"
-import {  Button, Grid, TextField } from "@mui/material"
+import {  Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, Snackbar, TextField } from "@mui/material"
 
 
 
@@ -8,6 +8,18 @@ export function ClienteForm() {
 
   const [nome, setNome] = useState()
   const [cpf, setCpf] = useState()
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState(false);
+
+  const [openDialog, setOpenDialog] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpenDialog(true);
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+  };
 
   const cadastrar = () => {
     let cliente = {
@@ -24,14 +36,55 @@ export function ClienteForm() {
     }).then(response => {
       return response.text()
     }).then(data => {
-      alert(data)
-    }).catch(error =>
-      alert(error)
-    )
+      setMessage(data)
+      setOpen(true)
+    }).catch(error => {
+      setMessage('Erro ao cadastrar cliente')
+      setOpen(true)
+    })
+
+    handleCloseDialog()
 
   }
 
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
+
   return <>
+
+      <Dialog
+        open={openDialog}
+        onClose={handleCloseDialog  }
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          Cadastro de Cliente
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Confirma o cadastro de cliente?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDialog}>Cancelar</Button>
+          <Button onClick={cadastrar} autoFocus>
+            Confirmar
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+    <Snackbar
+      open={open}
+      autoHideDuration={6000}
+      onClose={handleClose}
+      message={message}
+    />
 
     <Grid container spacing={4}>
       <Grid size={6}>
@@ -41,7 +94,7 @@ export function ClienteForm() {
         <TextField variant="filled" label="CPF" value={cpf} onChange={e => setCpf(e.target.value)} />
       </Grid>
       <Grid size={12}>
-        <Button variant="outlined" onClick={cadastrar}>Cadastrar</Button>
+        <Button variant="outlined" onClick={handleClickOpen}>Cadastrar</Button>
       </Grid>
     </Grid>
   </>
