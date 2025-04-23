@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { InputText } from "./InputText"
+import {  Button, Grid, TextField } from "@mui/material"
 
 
 
@@ -32,9 +33,17 @@ export function ClienteForm() {
 
   return <>
 
-    <InputText label={'Nome'} setValue={setNome} />
-    <InputText label={'CPF'} setValue={setCpf} ></InputText>
-    <button onClick={cadastrar}>Cadastrar</button>
+    <Grid container spacing={4}>
+      <Grid size={6}>
+        <TextField variant="outlined" label="Nome" value={nome} onChange={e => setNome(e.target.value)} />
+      </Grid>
+      <Grid size={6}>
+        <TextField variant="filled" label="CPF" value={cpf} onChange={e => setCpf(e.target.value)} />
+      </Grid>
+      <Grid size={12}>
+        <Button variant="outlined" onClick={cadastrar}>Cadastrar</Button>
+      </Grid>
+    </Grid>
   </>
 
 }

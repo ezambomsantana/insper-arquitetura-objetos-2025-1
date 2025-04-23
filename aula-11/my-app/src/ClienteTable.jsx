@@ -1,3 +1,4 @@
+import { DataGrid } from "@mui/x-data-grid"
 import { useEffect, useState } from "react"
 
 
@@ -16,18 +17,30 @@ export function ClienteTable() {
 
     }, [])
 
+    const columns = [
+        { field: 'nome', headerName: 'Nome', width: 90 },
+        { field: 'cpf', headerName: 'CPF', width: 90 },
+        { field: 'dataNascimento', headerName: 'Data de Nascimento', width: 90 }
+    ]
 
-    return <table>
 
-        <tbody>
-            {clientes.map((cliente, index) => {
-            return <tr key={index}>
-                <td>{cliente.nome}</td>
-                <td>{cliente.cpf}</td>
-                </tr>
-            })}
-        </tbody>
-    </table>
+    return <>
+        <DataGrid
+            rows={clientes}
+            columns={columns}
+            initialState={{
+                pagination: {
+                    paginationModel: {
+                    pageSize: 10,
+                    },
+                },
+            }}
+            pageSizeOptions={[5]}
+            checkboxSelection
+            disableRowSelectionOnClick
+        />
+
+    </>
 
 
 }
