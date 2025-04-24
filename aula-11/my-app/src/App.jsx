@@ -7,6 +7,7 @@ import { ClienteForm } from './ClienteForm'
 import { ContaTable } from './ContaTable'
 import { ContaForm } from './ContaForm'
 import { AppBar, Button, Menu, MenuItem, Toolbar } from '@mui/material'
+import { Link, Route, Routes, useNavigate } from 'react-router-dom'
 
 function App() {
 
@@ -14,6 +15,9 @@ function App() {
 
   const [anchorElCliente, setAnchorElCliente] = useState(null);
   const [anchorElConta, setAnchorElConta] = useState(null);
+
+  const navigate = useNavigate()
+
 
   const handleOpenCliente = (event) => {
     setAnchorElCliente(event.currentTarget);
@@ -35,6 +39,15 @@ function App() {
   return (
     <>
 
+    <Routes>
+
+      <Route path='/cadastrarCliente' element={<ClienteForm></ClienteForm>} />
+      <Route path='/listarClientes' element={<ClienteTable></ClienteTable>} />
+      <Route path='/cadastrarConta' element={<ContaForm></ContaForm>} />
+      <Route path='/listarContas' element={<ContaTable></ContaTable>} />
+
+    </Routes>
+
     <AppBar position="static" className='full-width'>
       <Toolbar>
         <Button color="inherit" onClick={handleOpenCliente}>
@@ -45,10 +58,10 @@ function App() {
           open={Boolean(anchorElCliente)}
           onClose={handleCloseCliente}
         >
-          <MenuItem onClick={() => { setMenu(0); handleCloseCliente(); }}>
+          <MenuItem onClick={() => { navigate('/cadastrarCliente'); handleCloseCliente(); }}>
             Cadastrar Cliente
           </MenuItem>
-          <MenuItem onClick={() => { setMenu(1); handleCloseCliente(); }}>
+          <MenuItem onClick={() => { navigate('/listarClientes'); handleCloseCliente(); }}>
             Listar Cliente
           </MenuItem>
         </Menu>
@@ -61,21 +74,15 @@ function App() {
           open={Boolean(anchorElConta)}
           onClose={handleCloseConta}
         >
-          <MenuItem onClick={() => { setMenu(2); handleCloseConta(); }}>
+          <MenuItem onClick={() => { navigate('/cadastrarConta'); handleCloseConta(); }}>
             Cadastrar Conta
           </MenuItem>
-          <MenuItem onClick={() => { setMenu(3); handleCloseConta(); }}>
+          <MenuItem onClick={() => { navigate('/listarContas'); handleCloseConta(); }}>
             Listar Contas
           </MenuItem>
         </Menu>
       </Toolbar>
     </AppBar>
-
-
-      { menu == 0 && <ClienteForm></ClienteForm>}
-      { menu == 1 && <ClienteTable></ClienteTable>}
-      { menu == 2 && <ContaForm></ContaForm>}
-      { menu == 3 && <ContaTable></ContaTable>}
       
       
     </>

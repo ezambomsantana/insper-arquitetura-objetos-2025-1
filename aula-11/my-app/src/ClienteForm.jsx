@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { InputText } from "./InputText"
 import {  Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, Snackbar, TextField } from "@mui/material"
+import { useNavigate } from "react-router-dom"
 
 
 
@@ -12,6 +13,8 @@ export function ClienteForm() {
   const [message, setMessage] = useState(false);
 
   const [openDialog, setOpenDialog] = useState(false);
+
+  const navigate = useNavigate()
 
   const handleClickOpen = () => {
     setOpenDialog(true);
@@ -36,8 +39,7 @@ export function ClienteForm() {
     }).then(response => {
       return response.text()
     }).then(data => {
-      setMessage(data)
-      setOpen(true)
+      navigate('/listarClientes')
     }).catch(error => {
       setMessage('Erro ao cadastrar cliente')
       setOpen(true)
