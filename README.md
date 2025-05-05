@@ -58,3 +58,9 @@ Aula 10 - Front-End
 Objetivos
 - Implementação de uma aplicação Front-End
 - Entender o padrão SPA (Single Page Application)
+
+
+Aula 11 - Integração Front-End e Back-End
+
+Objetivos
+- Integração entre uma aplicação Front-End (React) e Back-End (Java Spring)
